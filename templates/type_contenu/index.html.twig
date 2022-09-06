@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeContenu index{% endblock %}
+
+{% block body %}
+    <h1>TypeContenu index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_contenu in type_contenus %}
+            <tr>
+                <td>{{ type_contenu.id }}</td>
+                <td>{{ type_contenu.libelle }}</td>
+                <td>
+                    <a href="{{ path('app_type_contenu_show', {'id': type_contenu.id}) }}">show</a>
+                    <a href="{{ path('app_type_contenu_edit', {'id': type_contenu.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_contenu_new') }}">Create new</a>
+{% endblock %}

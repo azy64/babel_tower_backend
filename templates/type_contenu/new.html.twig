@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TypeContenu{% endblock %}
+
+{% block body %}
+    <h1>Create new TypeContenu</h1>
+
+    {{ include('type_contenu/_form.html.twig') }}
+
+    <a href="{{ path('app_type_contenu_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TypeContenu{% endblock %}
+
+{% block body %}
+    <h1>Edit TypeContenu</h1>
+
+    {{ include('type_contenu/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_type_contenu_index') }}">back to list</a>
+
+    {{ include('type_contenu/_delete_form.html.twig') }}
+{% endblock %}

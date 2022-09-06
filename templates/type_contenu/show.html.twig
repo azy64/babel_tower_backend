@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeContenu{% endblock %}
+
+{% block body %}
+    <h1>TypeContenu</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_contenu.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ type_contenu.libelle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_contenu_index') }}">back to list</a>
+
+    <a href="{{ path('app_type_contenu_edit', {'id': type_contenu.id}) }}">edit</a>
+
+    {{ include('type_contenu/_delete_form.html.twig') }}
+{% endblock %}
