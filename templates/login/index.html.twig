@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<div class="container">
+<div class="row">
+<div class="col-4 m-auto ">
+<main class="form-signin">
+  <form method="POST" action="{{path('app_login_check')}}">
+    <div class="text-center pt-5">
+        <img class="mb-4" src="{{ asset('images/babel2.png')}}" alt="" width="82" height="57">
+    </div>
+    <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+
+    <div class="form-floating">
+      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <div class="checkbox mb-3">
+     <!-- <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>-->
+      <span class="text-danger">
+      {% if error is defined %}
+        {{error}}
+      {% endif %}
+      </span>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; Tunaweza 2021–2022</p>
+  </form>
+</main>
+</div>
+</div>
+</div>
+{% endblock %}

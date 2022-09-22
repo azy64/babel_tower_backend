@@ -18,69 +18,69 @@ class Lesson
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $consigneOne;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $consigneTwo;
 
     /**
      * @ORM\Column(type="datetime")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $dateLesson;
 
     /**
      * @ORM\ManyToOne(targetEntity=Teacher::class, inversedBy="lessons")
      * @ORM\JoinColumn(nullable=false)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $teacher;
 
     /**
      * @ORM\ManyToOne(targetEntity=ClassRoom::class, inversedBy="lessons")
      * @ORM\JoinColumn(nullable=true)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $classRoom;
 
     /**
      * @ORM\ManyToMany(targetEntity=Contenu::class, mappedBy="lessons")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $contenus;
 
     /**
      * @ORM\OneToMany(targetEntity=Modality::class, mappedBy="lesson", orphanRemoval=true)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $modalities;
 
     /**
      * @ORM\OneToMany(targetEntity=Questionnaire::class, mappedBy="lesson", orphanRemoval=true)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $questionnaires;
 
     /**
      * @ORM\OneToMany(targetEntity=Resolution::class, mappedBy="lesson", orphanRemoval=true)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $resolutions;
 

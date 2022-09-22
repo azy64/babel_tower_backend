@@ -17,45 +17,50 @@ class Student
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $password;
 
     /**
      * @ORM\OneToMany(targetEntity=Membership::class, mappedBy="student", orphanRemoval=true)
-     * @groups("tunaweza")
+     * 
      */
     private $memberships;
 
     /**
      * @ORM\OneToMany(targetEntity=Resolution::class, mappedBy="student", orphanRemoval=true)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $resolutions;
+    /**
+     * @ORM\ManyToOne(targetEntity=Teacher::class, inversedBy="students")
+     *  @Groups("tunaweza")
+     */
+    private $teacher;
 
     public function __construct()
     {
@@ -112,6 +117,18 @@ class Student
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }

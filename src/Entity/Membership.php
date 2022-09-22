@@ -5,6 +5,7 @@
 namespace App\Entity;
 
 use App\Repository\MembershipRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -17,33 +18,40 @@ class Membership
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $dateMembership;
 
     /**
      * @ORM\ManyToOne(targetEntity=Teacher::class, inversedBy="memberships")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("tunaweza")
      */
     private $teacher;
 
     /**
      * @ORM\ManyToOne(targetEntity=Student::class, inversedBy="memberships")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("tunaweza")
      */
     private $student;
 
     /**
      * @ORM\ManyToOne(targetEntity=ClassRoom::class, inversedBy="memberships")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("tunaweza")
      */
     private $classroom;
+
+    public function __construct() {
+        $this->dateMembership = new DateTime();
+    }
 
     public function getId(): ?int
     {

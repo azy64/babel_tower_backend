@@ -95,7 +95,7 @@ class TeacherController extends AbstractController
     public function loginTeacher(Request $request, TeacherRepository $teachRep){
         $data = json_decode($request->getContent(),true);
         $result = $teachRep->findOneBy(['email'=>$data['email'],'password'=>$data['password']]);
-        return $this->json($result);
+        return $this->json($result, 200,[], ['groups'=>'personID']);
      }
 
      /**
@@ -117,6 +117,6 @@ class TeacherController extends AbstractController
             $ent->flush();
         }
         else return $this->json(["result"=>"Operation failed: this email:".$teacher->getEmail()." exists already"]);
-        return $this->json(['result'=>$teacher]);
+        return $this->json(['user'=>$teacher, 'message'=>'registered successfully'], 200,[], ['groups'=>'personID']);
      }
 }

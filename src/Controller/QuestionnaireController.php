@@ -3,8 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Questionnaire;
+use App\Entity\Resolution;
 use App\Form\QuestionnaireType;
+use App\Repository\ContenuRepository;
+use App\Repository\LessonRepository;
 use App\Repository\QuestionnaireRepository;
+use App\Repository\QuestionRepository;
+use App\Repository\ResolutionRepository;
+use App\Repository\StudentRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,5 +102,34 @@ class QuestionnaireController extends AbstractController
         return $this->json([
             'questionnaires' => $questionnaireRepository->findAll()
         ]);
+    }
+
+     /**
+     * @Route("/answer", name="app_questionnaire_answer", methods={"POST"})
+     */
+    public function answerToQustion(Request $request,
+     LessonRepository $lessonRepository,
+     ContenuRepository $contenuRepository,
+     QuestionRepository $questionRepository,
+     StudentRepository $studentRepository,
+     ManagerRegistry $register): Response
+    {
+        $manager = $register->getManager();
+        $question_id = $request->request->get('idQuestion');
+        $contenu_id = $request->request->get('idContenu');
+        $student_id = $request->request->get('idStudent');
+        $lesson_id = $request->request->get('idLesson');
+        $answer = $request->request->get('reponse');
+        $lesson = $lessonRepository->find($lesson_id);
+        $contenu = $contenuRepository->find($contenu_id);
+        $question = $questionRepository->find($question_id);
+        $student = $studentRepository->find($student_id);
+
+        $resolution = new Resolution();
+        $resolution->setLesson($lesson)->setLibelleResponse($answer)
+        ->setQuestion($question)->setStudent($student);
+        $manager->persist($resolution);
+        $manager->flush();
+        return $this->render("student/thanks.html.twig");
     }
 }

@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\ClassRoom;
+use App\Entity\Membership;
 use App\Entity\Student;
 use App\Form\StudentType;
+use App\Repository\ClassRoomRepository;
+use App\Repository\MembershipRepository;
 use App\Repository\StudentRepository;
+use App\Repository\TeacherRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,7 +105,7 @@ class StudentController extends AbstractController
      }
 
      /**
-     * @Route("/create", name="app_student_create", methods={"POST"})
+     * @Route("/create", name="app_student_create", methods={"POST", "GET"})
      */
     public function createStudent(Request $request, ManagerRegistry $manager, StudentRepository $studentRep){
 
@@ -121,4 +126,62 @@ class StudentController extends AbstractController
         
         return $this->json(['result'=> $student]);
      }
+    
+    /**
+     * @Route("/create-with-class", name="app_student_create_with_class", methods={"POST", "GET"})
+     */
+    public function createStudentWithClass(
+        Request $request, 
+        ManagerRegistry $manager, 
+        StudentRepository $studentRep, 
+        TeacherRepository $teacherRep,
+        ClassRoomRepository $classRep,
+        MembershipRepository $m){
+
+        $data = json_decode($request->request->get('student'),true);
+        //$result = $studentRep->findOneBy(['email'=>$data['email'],'password'=>$data['password']]);
+        // dd($data);
+        $student = new Student();
+        $student->setNom($data['nom']);
+        $student->setPrenom($data['prenom']);
+        $student->setEmail($data['email']);
+        $student->setPassword($data['password']);
+        $classrooms = $data['classrooms'];
+        $teacher = $teacherRep->find($data['userId']);
+        $student->setTeacher($teacher);
+        $ent = $manager->getManager();
+        $retour = $studentRep->findOneBy(['email'=>$data['email']]);
+        if($retour==null){
+          $ent->persist($student);
+          $ent->flush();
+          foreach($classrooms as $classroom) {
+            $member = new Membership();
+            $class = $classRep->find((int)$classroom['id']);
+            $member->setTeacher($teacher)->setStudent($student)->setClassroom($class);
+            $ent->persist($member);
+          }
+          $ent->flush();
+        }
+        else return $this->json(["result"=>"Operation failed: this email ".$student->getEmail()." exists already"]);
+        $students = $studentRep->findBy(['teacher'=>$teacher]);
+        $members =$m->findBy(['teacher'=> $teacher]);
+        return $this->json(['students'=> $students, 'message'=>'succesful', 'members'=> $members],
+         200, [], ["groups"=> "tunaweza"]);
+     }
+    
+    /**
+     * @Route("/all", name="app_student_all", methods={"POST", "GET"})
+     */
+    public function getAllStudents(
+         Request $request, 
+         TeacherRepository $teacherRep, 
+         StudentRepository $t,
+         MembershipRepository $m){
+        $id = (int) $request->request->get('userId');
+        $teacher = $teacherRep->find($id);
+        $members =$m->findBy(['teacher'=> $teacher]);
+        return $this->json(['students'=> $t->findBy(['teacher'=> $teacher]),
+        'message'=>'succesful', 'members'=>$members],
+         200, [], ["groups"=> "tunaweza"]);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TeacherRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,31 +17,37 @@ class Teacher
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("personID")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups("personID")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups("personID")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups("personID")
      */
     private $langue;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("personID")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("personID")
      */
     private $password;
 
@@ -55,6 +62,13 @@ class Teacher
     private $classRooms;
 
     /**
+     * @ORM\OneToMany(targetEntity=Student::class, mappedBy="teacher")
+     * @Groups("personID")
+     */
+    private $students;
+
+
+    /**
      * @ORM\OneToMany(targetEntity=Membership::class, mappedBy="teacher", orphanRemoval=true)
      */
     private $memberships;
@@ -64,6 +78,7 @@ class Teacher
         $this->lessons = new ArrayCollection();
         $this->classRooms = new ArrayCollection();
         $this->memberships = new ArrayCollection();
+        $this->students = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,4 +235,35 @@ class Teacher
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Student>
+     */
+    public function getStudents(): Collection
+    {
+        return $this->students;
+    }
+
+    public function addStudent(Student $student): self
+    {
+        if (!$this->students->contains($student)) {
+            $this->students[] = $student;
+            $student->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudent(Student $student): self
+    {
+        if ($this->students->removeElement($student)) {
+            // set the owning side to null (unless already changed)
+            if ($student->getTeacher() === $this) {
+                $student->setTeacher(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

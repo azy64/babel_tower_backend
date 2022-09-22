@@ -1,0 +1,30 @@
+<div class="row pt-3">
+    <div class="col-md-4">
+        <div class="col-md-4 rond text-center rounded bg-white">
+            <img src="{{asset('images/loginID.png')}}" width="80"/>
+        </div>
+        <div class="col-md-2">
+            <h4>
+            {{student.prenom}} <br/>
+            {{student.nom}}
+        </h4>
+        </div>
+    </div>
+    <div class="col-md-8 pt-5">
+        <ul class="nav justify-content-center bg-transparent">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Mes leçons</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Mes résultats</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('app_logout')}}">Deconnexion</a>
+            </li>
+            <!--<li class="nav-item">
+                <a class="nav-link disabled">Disabled</a>
+            </li>-->
+        </ul>
+    </div>
+</div>
+<hr>

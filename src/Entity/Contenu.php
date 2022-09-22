@@ -17,26 +17,26 @@ class Contenu
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $fileName;
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeContenu::class)
      * @ORM\JoinColumn(nullable=false)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $typeContenu;
 
@@ -47,7 +47,7 @@ class Contenu
 
     /**
      * @ORM\OneToMany(targetEntity=Modality::class, mappedBy="contenu", orphanRemoval=true)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $modalities;
 

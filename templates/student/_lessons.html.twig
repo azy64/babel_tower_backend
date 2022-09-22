@@ -1,0 +1,51 @@
+<div class="row">
+<h3>Mes leçons</h3>
+{% for item in members %}
+{% set lessons = item.classroom.lessons %}
+    {% for lesson in lessons %}
+        <div class="rounded bg-white mb-2 mt-3 p-3">
+            <a class="text-decoration-none" href="#">{{lesson.id}} {{lesson.title}} {{lesson.dateLesson|date('d-m-Y H:m:s')}}</a>
+            <hr>
+            <div class="row">
+                {%  set contents = lesson.contenus %}
+                {% for content in contents %}
+                   <div class="col contenu" id="id{{content.id}}"
+                   data-link="{{content.filename}}" 
+                   data-type="{{content.typecontenu.libelle}}"
+                   data-title="{{content.libelle}}" 
+                   data-repetition="{{ modal.findBy({"contenu": content.id})[0].lecture.repetition }}" 
+                   >
+                   <input type="hidden" 
+                   {% if qr.findBy({'contenu': content}) is not empty %}
+                   data-question={{qr.findBy({'contenu': content})[0].question.libelle}}
+                   data-student={{student.id}}
+                   data-id={{qr.findBy({'contenu': content})[0].question.id}}
+                   data-reponse={{qr.findBy({'contenu': content})[0].question.reponse}}
+                   data-assertion1={{qr.findBy({'contenu': content})[0].question.assertion1}}
+                   data-assertion2={{qr.findBy({'contenu': content})[0].question.assertion2}}
+                   data-assertion3={{qr.findBy({'contenu': content})[0].question.assertion3}}
+                   data-lesson={{lesson.id}}
+                   data-contenu={{content.id}}
+                   
+                   {% endif %}
+                   
+                   />
+                        {% if content.typecontenu.libelle == "audio"  %}
+                            <div class="clicked"> 
+                                 <span>{{content.libelle}}</span>
+                                <img width="40" src="{{asset('images/audio.png')}}"/>
+                            </div>
+                        {% else %}
+                        <div class="clicked"> 
+                            <span>{{content.libelle}}</span>
+                            <img width="40" src="{{asset('images/video2.png')}}" />
+                        </div>
+                        {% endif %}
+                   </div> 
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    
+{% endfor %}
+</div>

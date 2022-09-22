@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ResolutionRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -62,6 +63,11 @@ class Resolution
      */
     private $lesson;
 
+    public function __construct() {
+        $this->dateResolution = new DateTime();
+        $this->dateFinResolution = new DateTime();
+        $this->dateDebutResolution = new DateTime();
+    }
     public function getId(): ?int
     {
         return $this->id;

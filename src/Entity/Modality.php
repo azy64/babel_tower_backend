@@ -15,7 +15,7 @@ class Modality
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $id;
 
@@ -34,7 +34,7 @@ class Modality
     /**
      * @ORM\ManyToOne(targetEntity=Lecture::class, inversedBy="modalities")
      * @ORM\JoinColumn(nullable=false)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $lecture;
 

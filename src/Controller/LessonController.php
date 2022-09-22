@@ -160,7 +160,7 @@ class LessonController extends AbstractController
             'contenus' => $contents,//->files->get("fichier")->getClientOriginalName(),
             'lessons' => $lessonRepository->findBy(['teacher'=>$prof])??[],
             'message' => 'here is data'
-        ], 200, ['groups'=>'tunaweza']);
+        ], 200,[], ['groups'=>'tunaweza']);
     }
 
     public function uploadFileTunaweza($fichier){
@@ -200,5 +200,15 @@ class LessonController extends AbstractController
             $manager->persist($questionnaire);
             $manager->flush();
         }
+    }
+     /**
+     * @Route("/all", name="app_lesson_all", methods={"POST"})
+     */
+    public function getAllLessons(Request $request, TeacherRepository $teacherRep, LessonRepository $lessonRep){
+        $userId = (int) $request->request->get('userId');
+        $teacher = $teacherRep->find($userId);
+        $lessons = $lessonRep->findBy(['teacher'=> $teacher]);
+       return  $this->json(['lessons'=> $lessons, 'message'=>'good job','id'=>$userId],
+       200, [], ['groups'=>'tunaweza']);
     }
 }

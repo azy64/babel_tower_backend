@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard!{% endblock %}
+
+{% block body %}
+<div class="container">
+   {{ include('student/_menu.html.twig', {'student': student}) }}
+   {{ include('student/_lessons.html.twig', {'members': members,
+    'modal': modal, 'qr': qr, 'student': student}) }}
+
+<div class="window vanish">
+    <div class="popup">
+        <div class="bar">
+            <span class="close" id="close" >X</span>
+        </div>
+        <div class="content">
+        ici le contenu
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    const close = document.querySelector("#close");
+    const win = document.querySelector(".window");
+    const contenus = document.querySelectorAll(".contenu");
+    const container = document.querySelector(".content");
+    close.addEventListener('click',()=>{
+        win.classList.add('vanish');
+    });
+    const transformData= (el) =>{
+        const question = el.getAttribute("data-question");
+        const response = el.getAttribute("data-response");
+        const assertion1 = el.getAttribute("data-assertion1");
+        const assertion2 = el.getAttribute("data-assertion2");
+        const assertion3 = el.getAttribute("data-assertion3");
+        const questionId = el.getAttribute("data-id");
+        const studentId = el.getAttribute("data-student");
+        const lessonId = el.getAttribute("data-lesson");
+        const contenuId = el.getAttribute("data-contenu");
+        if(question===null || response===null || assertion1===null) return "";
+        const formulaire ="<form method='post' action='{{path('app_questionnaire_answer')}}'>"+
+        "<h3>"+question+"</h3>"+
+        "<div>"+
+        assertion1+"<input type='radio' name='reponse' value='"+assertion1+"'/> "+
+        assertion2+"<input type='radio' name='reponse' value='"+assertion2+"'/> "+
+        assertion3+"<input type='radio' name='reponse' value='"+assertion3+"'/> "+
+        "<input type='hidden' name='idLesson' value='"+lessonId+"'/>"+
+        "<input type='hidden' name='idContenu' value='"+contenuId+"'/>"+
+        "<input type='hidden' name='idQuestion' value='"+questionId+"'/>"+
+        "<input type='hidden' name='idStudent' value='"+studentId+"'/>"+
+        "<input type='submit' value='Soummetre'/>"+
+        "</div>";
+        return formulaire;
+    }
+    contenus.forEach((contenu)=>{
+        contenu.addEventListener('click', ()=>{
+            const type = contenu.getAttribute('data-type');
+            const title = contenu.getAttribute('data-title');
+            const repetition = parseInt(contenu.getAttribute('data-repetition'));
+            const link = 'uploads/contenus/'+contenu.getAttribute('data-link');
+            console.log('type', type);
+            if(type==='audio') createAudioLecture({link, repetition, container, title} )
+            if(type==='video') createVideoLecture({link, repetition, container, title} )
+            // const t = `#d${contenu.id} input[type='hidden']`;
+            // const text = transformData(document.querySelector(`#${contenu.id} input[type='hidden']`));
+            // container.innerHTML += text; 
+           win.classList.remove('vanish'); 
+        })
+    })
+</script>
+{% endblock %}

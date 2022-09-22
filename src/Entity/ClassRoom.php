@@ -18,19 +18,19 @@ class ClassRoom
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="datetime")
-     * @groups("tunaweza")
+     * @Groups("tunaweza")
      */
     private $creationClass;
 
@@ -46,7 +46,7 @@ class ClassRoom
 
     /**
      * @ORM\OneToMany(targetEntity=Membership::class, mappedBy="classroom", orphanRemoval=true)
-     * @groups("tunaweza")
+     * 
      */
     private $memberships;
 

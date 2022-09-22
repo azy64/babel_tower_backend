@@ -109,7 +109,7 @@ class ClassRoomController extends AbstractController
         LessonRepository $lessonRep,
         ClassRoomRepository $classRoomRep
         ){
-        $data =  json_decode($request->request->get('lesson'), true);
+        $data =  json_decode($request->request->get('classroom'), true);
         $manager = $managerRegistry->getManager();
         $teacher = $teacherRep->findOneBy(['id'=> $data['userId']]);
         $lessons = $data['lessons'];
@@ -120,11 +120,31 @@ class ClassRoomController extends AbstractController
             $classRoom->addLesson($element);
         }
         $manager->persist(($classRoom));
-        $this->json([
-            "lessons"=>$lessonRep->findBy(['teacher'=>$teacher]),
-            "classroom" => $classRoomRep->findBy(['teacher'=>$teacher]),
+        $manager->flush();
+        return $this->json([
+            "lessons"=> $lessonRep->findBy(["teacher"=>$teacher]),
+            "classrooms" => $classRoomRep->findBy(['teacher'=>$teacher]),
             'message' => 'here is data'
-        ], 200, ['groups'=>'tunaweza']);
+        ], 200,[], ['groups'=>'tunaweza']);
+
+    }
+     /**
+     * @Route("/all", name="app_class_room_all", methods={"POST"})
+     */
+
+    public function getClassRooms (
+        Request $request, 
+        TeacherRepository $teacherRep,
+        ClassRoomRepository $classRoomRep
+        ){
+        $id = (int) $request->request->get('userId');
+        $teacher = $teacherRep->find($id);
+        $classRooms = $classRoomRep->findBy(['teacher'=> $teacher]);
+
+        return $this->json([
+            "classrooms" => $classRooms,
+            'message' => 'here is data'
+        ], 200,[], ['groups'=>'tunaweza']);
 
     }
 }
