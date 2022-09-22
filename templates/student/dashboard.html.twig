@@ -62,8 +62,11 @@
             if(type==='audio') createAudioLecture({link, repetition, container, title} )
             if(type==='video') createVideoLecture({link, repetition, container, title} )
             // const t = `#d${contenu.id} input[type='hidden']`;
-            // const text = transformData(document.querySelector(`#${contenu.id} input[type='hidden']`));
+            const form = document.createElement('div');
+            const text = transformData(document.querySelector(`#${contenu.id} input[type='hidden']`));
             // container.innerHTML += text; 
+            form.innerHTML = text;
+            container.appendChild(form);
            win.classList.remove('vanish'); 
         })
     })
