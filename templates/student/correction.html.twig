@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}correction!{% endblock %}
+
+{% block body %}
+<div class="container">
+   {{ include('student/_menu.html.twig', {'student': student}) }}
+   
+   <div>
+   <h1>Resultat(s)</h1>
+    <table class="table">
+    <thead>
+        <tr>
+            <th >Leçon</th>
+            <th >Question</th>
+            <th >Assertion</th>
+            <th >Reponse</th>
+            <th >Votre reponse</th>
+            <th >Resultat</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if resolutions is not empty %}
+    {% for resolve in resolutions %}
+        <tr>
+        <td>{{resolve.lesson.title}}</td>
+        <td>{{resolve.question.libelle}}</td>
+        <td>1. {{resolve.question.assertion1}}<br>2.{{resolve.question.assertion2}}<br>3. {{resolve.question.assertion3}}</td>
+        <td>{{resolve.question.reponse}}</td>
+        <td>{{resolve.libelleResponse}}</td>
+        <td>{% if response == true  %}
+            <img src='{{asset('images/check.png')}}' alt="reponse"  width="30" />
+            {% else %}
+            <img src='{{asset('images/cancel.png')}}' alt="reponse"  width="30" />
+        {% endif %}
+        </td>
+        </tr>
+    {% endfor %}
+    
+    {% endif %}
+    
+    </tbody>
+    </table>
+   </div>
+</div>
+{% endblock %}

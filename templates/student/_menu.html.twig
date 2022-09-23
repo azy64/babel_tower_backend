@@ -13,10 +13,10 @@
     <div class="col-md-8 pt-5">
         <ul class="nav justify-content-center bg-transparent">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Mes leçons</a>
+                <a class="nav-link active" aria-current="page" href="{{path('app_dash', {'id': student.id})}}">Mes leçons</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Mes résultats</a>
+                <a class="nav-link" href="{{path('app_correction', {'id': student.id})}}">Mes résultats</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{path('app_logout')}}">Deconnexion</a>

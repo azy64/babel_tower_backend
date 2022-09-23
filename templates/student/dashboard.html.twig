@@ -29,7 +29,7 @@
     });
     const transformData= (el) =>{
         const question = el.getAttribute("data-question");
-        const response = el.getAttribute("data-response");
+        const response = el.getAttribute("data-reponse");
         const assertion1 = el.getAttribute("data-assertion1");
         const assertion2 = el.getAttribute("data-assertion2");
         const assertion3 = el.getAttribute("data-assertion3");
@@ -37,13 +37,14 @@
         const studentId = el.getAttribute("data-student");
         const lessonId = el.getAttribute("data-lesson");
         const contenuId = el.getAttribute("data-contenu");
+        // console.log(question, response, assertion1);
         if(question===null || response===null || assertion1===null) return "";
         const formulaire ="<form method='post' action='{{path('app_questionnaire_answer')}}'>"+
         "<h3>"+question+"</h3>"+
-        "<div>"+
-        assertion1+"<input type='radio' name='reponse' value='"+assertion1+"'/> "+
-        assertion2+"<input type='radio' name='reponse' value='"+assertion2+"'/> "+
-        assertion3+"<input type='radio' name='reponse' value='"+assertion3+"'/> "+
+        "<div><div>"+
+        assertion1+"<input type='radio' name='reponse' value='"+assertion1+"'/></div><div> "+
+        assertion2+"<input type='radio' name='reponse' value='"+assertion2+"'/> </div><div>"+
+        assertion3+"<input type='radio' name='reponse' value='"+assertion3+"'/> </div><div>"+
         "<input type='hidden' name='idLesson' value='"+lessonId+"'/>"+
         "<input type='hidden' name='idContenu' value='"+contenuId+"'/>"+
         "<input type='hidden' name='idQuestion' value='"+questionId+"'/>"+
@@ -55,9 +56,13 @@
     contenus.forEach((contenu)=>{
         contenu.addEventListener('click', ()=>{
             const type = contenu.getAttribute('data-type');
-            const title = contenu.getAttribute('data-title');
+            let title = contenu.getAttribute('data-title');
+            const consigne = contenu.getAttribute('data-consigne');
+            const consignes= consigne.split('--');
+            const supplement ='<h3>'+consignes[0]+'</h3><h3>'+consignes[1]+'</h3>';
             const repetition = parseInt(contenu.getAttribute('data-repetition'));
             const link = 'uploads/contenus/'+contenu.getAttribute('data-link');
+            title+=supplement;
             console.log('type', type);
             if(type==='audio') createAudioLecture({link, repetition, container, title} )
             if(type==='video') createVideoLecture({link, repetition, container, title} )
@@ -65,6 +70,7 @@
             const form = document.createElement('div');
             const text = transformData(document.querySelector(`#${contenu.id} input[type='hidden']`));
             // container.innerHTML += text; 
+            console.log('text:', text);
             form.innerHTML = text;
             container.appendChild(form);
            win.classList.remove('vanish'); 

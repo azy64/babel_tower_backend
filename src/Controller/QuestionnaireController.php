@@ -112,7 +112,8 @@ class QuestionnaireController extends AbstractController
      ContenuRepository $contenuRepository,
      QuestionRepository $questionRepository,
      StudentRepository $studentRepository,
-     ManagerRegistry $register): Response
+     ManagerRegistry $register,
+     ResolutionRepository $resolutionRepository): Response
     {
         $manager = $register->getManager();
         $question_id = $request->request->get('idQuestion');
@@ -124,12 +125,15 @@ class QuestionnaireController extends AbstractController
         $contenu = $contenuRepository->find($contenu_id);
         $question = $questionRepository->find($question_id);
         $student = $studentRepository->find($student_id);
-
-        $resolution = new Resolution();
-        $resolution->setLesson($lesson)->setLibelleResponse($answer)
-        ->setQuestion($question)->setStudent($student);
-        $manager->persist($resolution);
-        $manager->flush();
-        return $this->render("student/thanks.html.twig");
+        $resolutionFind= $resolutionRepository->findBy(['question'=>$question]);
+        if($resolutionFind===null){
+            $resolution = new Resolution();
+            $resolution->setLesson($lesson)->setLibelleResponse($answer)
+            ->setQuestion($question)->setStudent($student);
+            $manager->persist($resolution);
+            $manager->flush();
+        }
+        return $this->redirectToRoute('app_correction',['id'=> $student->getId()]);
+        //return $this->render("student/thanks.html.twig");
     }
 }
