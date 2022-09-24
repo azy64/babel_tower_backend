@@ -79,6 +79,25 @@ const createAudioNormal = ({link, container, title} ) =>{
    container.appendChild(div);
 }
 
+const createVideoNormal = ({link, container, title} ) =>{
+    container.innerHTML='';
+    const div = document.createElement('div');
+    const play = document.createElement('button');
+    play.classList.add("play");
+    const h1 = document.createElement('h1');
+    const video = document.createElement('video');
+    //const control = document.createElement('div');
+    h1.innerHTML = title;
+    video.id="lesson" ;
+    video.crossOrigin="anonymous" ;
+    video.controls = true;
+    video.src=link;
+   video.type="video/mp4";
+   div.appendChild(h1);
+   div.appendChild(video);
+   container.appendChild(div);
+}
+
 const createVideoLecture = ({link, repetition, container, title} ) =>{
     container.innerHTML='';
     const div = document.createElement('div');

@@ -94,8 +94,8 @@ class TeacherController extends AbstractController
 
     public function loginTeacher(Request $request, TeacherRepository $teachRep){
         $data = json_decode($request->getContent(),true);
-        $result = $teachRep->findOneBy(['email'=>$data['email'],'password'=>$data['password']]);
-        return $this->json($result, 200,[], ['groups'=>'personID']);
+        $teacher = $teachRep->findOneBy(['email'=>$data['email'],'password'=>$data['password']]);
+        return $this->json(['user'=>$teacher], 200,[], ['groups'=>'personID']);
      }
 
      /**

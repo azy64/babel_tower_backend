@@ -18,13 +18,13 @@
                    >
                    <input type="hidden" 
                    {% if qr.findBy({'contenu': content}) is not empty %}
-                   data-question="{{qr.findBy({'contenu': content})[0].question.libelle|e}}"
+                   data-question="{{qr.findBy({'contenu': content})[0].question.libelle}}"
                    data-student="{{student.id}}"
                    data-id="{{qr.findBy({'contenu': content})[0].question.id}}"
-                   data-reponse="{{qr.findBy({'contenu': content})[0].question.reponse|e}}"
-                   data-assertion1="{{qr.findBy({'contenu': content})[0].question.assertion1|e}}"
-                   data-assertion2="{{qr.findBy({'contenu': content})[0].question.assertion2|e}}"
-                   data-assertion3="{{qr.findBy({'contenu': content})[0].question.assertion3|e}}"
+                   data-reponse="{{qr.findBy({'contenu': content})[0].question.reponse}}"
+                   data-assertion1="{{qr.findBy({'contenu': content})[0].question.assertion1}}"
+                   data-assertion2="{{qr.findBy({'contenu': content})[0].question.assertion2}}"
+                   data-assertion3="{{qr.findBy({'contenu': content})[0].question.assertion3}}"
                    data-lesson="{{lesson.id}}"
                    data-contenu="{{content.id}}"
                    
