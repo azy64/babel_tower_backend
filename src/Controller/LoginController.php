@@ -74,7 +74,7 @@ public function correction(Student $student, ResolutionRepository $resolutionRep
     $resolutions= $resolutionRepository->findBy(['student'=>$student]);
     if($resolutions!==null){
         $question = $resolutions[0]->getQuestion() ;
-        $reponse = strpos($question->getReponse(), $resolutions[0]->getLibelleResponse());
+        $reponse = str_contains($question->getReponse(), $resolutions[0]->getLibelleResponse());
         return $this->render("student/correction.html.twig",
         ['student'=>$student,
         'resolutions'=>$resolutions,

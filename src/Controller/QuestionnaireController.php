@@ -116,22 +116,26 @@ class QuestionnaireController extends AbstractController
      ResolutionRepository $resolutionRepository): Response
     {
         $manager = $register->getManager();
-        $question_id = $request->request->get('idQuestion');
         $contenu_id = $request->request->get('idContenu');
         $student_id = $request->request->get('idStudent');
         $lesson_id = $request->request->get('idLesson');
-        $answer = $request->request->get('reponse');
         $lesson = $lessonRepository->find($lesson_id);
         $contenu = $contenuRepository->find($contenu_id);
-        $question = $questionRepository->find($question_id);
         $student = $studentRepository->find($student_id);
-        $resolutionFind= $resolutionRepository->findBy(['question'=>$question]);
-        if($resolutionFind===null){
-            $resolution = new Resolution();
-            $resolution->setLesson($lesson)->setLibelleResponse($answer)
-            ->setQuestion($question)->setStudent($student);
-            $manager->persist($resolution);
-            $manager->flush();
+        $number = (int) $request->request->get('numberOfQuestions');
+        for($i=0;$i<$number;$i++){
+            $question_id = (int)$request->request->get("idQuestion$i");
+            $answer = $request->request->get("question$i");
+            // dd($answer);
+            $question = $questionRepository->find($question_id);
+            $resolutionFind= $resolutionRepository->findBy(['question'=>$question]);
+            if(count($resolutionFind)=== 0 || empty($resolutionFind)){
+                $resolution = new Resolution();
+                $resolution->setLesson($lesson)->setLibelleResponse($answer)
+                ->setQuestion($question)->setStudent($student);
+                $manager->persist($resolution);
+                $manager->flush();
+            }
         }
         return $this->redirectToRoute('app_correction',['id'=> $student->getId()]);
         //return $this->render("student/thanks.html.twig");

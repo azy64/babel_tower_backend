@@ -9,28 +9,31 @@
             <div class="row">
                 {%  set contents = lesson.contenus %}
                 {% for content in contents %}
-                   <div class="col contenu" id="id{{content.id}}"
+                   <div class="col contenu" id="contenu{{content.id}}"
                    data-link="{{content.filename}}" 
                    data-type="{{content.typecontenu.libelle}}"
                    data-title="{{content.libelle}}" 
                    data-consigne="{{lesson.consigneOne}}--{{lesson.consigneTwo}}"
                    data-repetition="{{ modal.findBy({"contenu": content.id})[0].lecture.repetition }}" 
                    >
-                   <input type="hidden" 
+                   <div class="questions">
                    {% if qr.findBy({'contenu': content}) is not empty %}
-                   data-question="{{qr.findBy({'contenu': content})[0].question.libelle}}"
-                   data-student="{{student.id}}"
-                   data-id="{{qr.findBy({'contenu': content})[0].question.id}}"
-                   data-reponse="{{qr.findBy({'contenu': content})[0].question.reponse}}"
-                   data-assertion1="{{qr.findBy({'contenu': content})[0].question.assertion1}}"
-                   data-assertion2="{{qr.findBy({'contenu': content})[0].question.assertion2}}"
-                   data-assertion3="{{qr.findBy({'contenu': content})[0].question.assertion3}}"
-                   data-lesson="{{lesson.id}}"
-                   data-contenu="{{content.id}}"
-                   
+                   {% for quest in qr.findBy({'contenu': content}) %}
+                    <input type="hidden" id="question{{quest.id}}"
+                        data-question="{{quest.question.libelle}}"
+                        data-student="{{student.id}}"
+                        data-id="{{quest.question.id}}"
+                        data-reponse="{{quest.question.reponse}}"
+                        data-assertion1="{{quest.question.assertion1}}"
+                        data-assertion2="{{quest.question.assertion2}}"
+                        data-assertion3="{{quest.question.assertion3}}"
+                        data-lesson="{{lesson.id}}"
+                        data-contenu="{{content.id}}"
+                      />
+                   {% endfor %}
                    {% endif %}
-                   
-                   />
+                   </div>
+                
                         {% if content.typecontenu.libelle == "audio"  %}
                             <div class="clicked"> 
                                  <span>{{content.libelle}}</span>
