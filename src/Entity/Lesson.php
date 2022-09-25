@@ -61,7 +61,7 @@ class Lesson
     private $classRoom;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Contenu::class, mappedBy="lessons")
+     * @ORM\ManyToMany(targetEntity=Contenu::class, mappedBy="lessons", orphanRemoval=true)
      * @Groups("tunaweza")
      */
     private $contenus;

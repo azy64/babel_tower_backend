@@ -115,6 +115,7 @@ class Contenu
     {
         if (!$this->lessons->contains($lesson)) {
             $this->lessons[] = $lesson;
+            $lesson->addContenu($this);
         }
 
         return $this;

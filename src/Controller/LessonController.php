@@ -139,9 +139,10 @@ class LessonController extends AbstractController
             $id = $content['id'];
             $name = $this->uploadFileTunaweza($request->files->get("fichier_$id"));
             $contenu->setFileName($name);
+            $contenu->addLesson($lesson);
             $manager->persist($contenu);
             $manager->flush();
-            $contenu->addLesson($lesson);
+            
             $modality = new Modality();
             
             $modality->setContenu($contenu)->setLecture($lecture)->setLesson($lesson);
