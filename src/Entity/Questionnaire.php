@@ -35,7 +35,7 @@ class Questionnaire
     private $dateCreation;
 
     /**
-     * @ORM\OneToOne(targetEntity=Contenu::class, inversedBy="questionnaire", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Contenu::class, inversedBy="questionnaire", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      * @groups("tunaweza")
      */
