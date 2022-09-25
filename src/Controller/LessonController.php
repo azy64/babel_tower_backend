@@ -160,7 +160,7 @@ class LessonController extends AbstractController
             'lesson' => $lesson,
             'contenus' => $contents,//->files->get("fichier")->getClientOriginalName(),
             'lessons' => $lessonRepository->findBy(['teacher'=>$prof])??[],
-            'message' => 'here is data'
+            'message' => 'Leçon enregistrée'
         ], 200,[], ['groups'=>'tunaweza']);
     }
 
