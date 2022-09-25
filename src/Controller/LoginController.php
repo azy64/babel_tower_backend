@@ -48,7 +48,7 @@ public function dash(Student $student,
 */
     public function verifier(
         Request $request, 
-        StudentRepository $studentRepository, 
+        StudentRepository $studentRepository 
         ){
         $email = $request->request->get('email');
         $password = $request->request->get('password');
