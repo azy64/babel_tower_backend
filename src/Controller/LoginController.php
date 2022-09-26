@@ -72,19 +72,15 @@ public function logout(){
 public function correction(Student $student, ResolutionRepository $resolutionRepository){
 
     $resolutions= $resolutionRepository->findBy(['student'=>$student]);
-    if($resolutions!==null){
-        $question = $resolutions[0]->getQuestion() ;
-        $reponse = str_contains($question->getReponse(), $resolutions[0]->getLibelleResponse());
+    if(count($resolutions) >0){
         return $this->render("student/correction.html.twig",
         ['student'=>$student,
         'resolutions'=>$resolutions,
-        'response'=>$reponse
         ]);
     }
     return $this->render("student/correction.html.twig",
         ['student'=>$student,
         'resolutions'=>[],
-        'response'=>''
         ]);
     
 }

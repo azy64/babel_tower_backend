@@ -59,7 +59,12 @@ const createAudioLecture = ({link, repetition, container, title} ) =>{
     });
 
 }
-
+/**
+ * 
+ * @param {link} url de la video
+ * @param {constainer} container dans lequel placer la video ou l'audio
+ * @param {title} titre de la video ou de l'audio 
+ */
 const createAudioNormal = ({link, container, title} ) =>{
     container.innerHTML='';
     const div = document.createElement('div');
@@ -71,6 +76,8 @@ const createAudioNormal = ({link, container, title} ) =>{
     h1.innerHTML = title;
     audio.id="lesson" ;
     audio.crossOrigin="anonymous" ;
+    audio.setAttribute('controls', true);
+    audio.setAttribute('width','80%');
     audio.controls = true;
     audio.src=link;
    audio.type="audio/mpeg";
@@ -90,6 +97,8 @@ const createVideoNormal = ({link, container, title} ) =>{
     h1.innerHTML = title;
     video.id="lesson" ;
     video.crossOrigin="anonymous" ;
+    video.setAttribute('controls', true);
+    video.setAttribute('width','100%');
     video.controls = true;
     video.src=link;
    video.type="video/mp4";

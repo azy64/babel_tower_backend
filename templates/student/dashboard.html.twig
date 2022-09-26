@@ -93,11 +93,11 @@
             const repetition = parseInt(contenu.getAttribute('data-repetition'));
             const link = 'http://localhost:8000/uploads/contenus/'+contenu.getAttribute('data-link');
             title+=supplement;
-            console.log('type', type);
-            if(type==='audio') createAudioLecture({link, repetition, container, title} );
-            if(type === 'audio' && repetition==='normal') createAudioNormal = ({link, container, title} );
-            if(type=== 'video' && repetition === 'normal') createVideoNormal = ({link, container, title} ); 
-            if(type==='video') createVideoLecture({link, repetition, container, title} );
+            // console.log('type', type);
+            if(type === 'audio' && repetition === 0) createAudioNormal = ({link, container, title} );
+            if(type==='audio' && repetition > 0) createAudioLecture({link, repetition, container, title} );
+            if(type=== 'video' && repetition === 0) createVideoNormal = ({link, container, title} ); 
+            if(type==='video' && repetition > 0) createVideoLecture({link, repetition, container, title} );
             // const t = `#d${contenu.id} input[type='hidden']`;
             const form = document.createElement('div');
             const questions = document.querySelectorAll(`#${contenu.id} .questions input[type='hidden']`)

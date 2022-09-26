@@ -28,7 +28,7 @@
         <td>1. {{resolve.question.assertion1}}<br>2.{{resolve.question.assertion2}}<br>3. {{resolve.question.assertion3}}</td>
         <td>{{resolve.question.reponse}}</td>
         <td>{{resolve.libelleResponse}}</td>
-        <td>{% if response == true  %}
+        <td>{% if resolve.libelleResponse == resolve.question.reponse  %}
             <img src='{{asset('images/check.png')}}' alt="reponse"  width="30" />
             {% else %}
             <img src='{{asset('images/cancel.png')}}' alt="reponse"  width="30" />
